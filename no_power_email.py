@@ -11,11 +11,12 @@ gmail_user = os.getenv("GMAIL_USER")
 gmail_password = os.getenv("GMAIL_PASSWORD")
 
 
-def send_no_power_email(split_data):
+def send_no_power_email(tomorrow_date, split_data):
     msg = EmailMessage()
-    msg.set_content(f"{split_data['where']}\n\n{split_data['when']}")
+    data_list = [f"{el['where']}\n{el['when']}" for el in split_data]
+    msg.set_content("\n------------------------".join(data_list))
 
-    msg["Subject"] = "Split bez struje"
+    msg["Subject"] = f"Split bez struje - {tomorrow_date}"
     msg["From"] = gmail_user
     msg["To"] = ["kilic.luka@gmail.com", "marijakardum1@gmail.com"]
 

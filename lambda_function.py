@@ -10,7 +10,7 @@ logger.setLevel(logging.INFO)
 
 
 def lambda_handler(event, context):
-    split_no_power_data = {}
+    split_no_power_data = []
     split_hep_url = "https://www.hep.hr/ods/bez-struje/19?dp=split&el=208"
     tomorrow_date = (date.today() + timedelta(days=1)).strftime("%d.%m.%Y")
     final_url = split_hep_url + f"&datum={tomorrow_date}"
@@ -30,12 +30,13 @@ def lambda_handler(event, context):
     for i, div in enumerate(no_power_where_divs):
         town = div.find("div", {"class": "grad"}, recursive=False)
         if town and "split" in town.text.lower():
-            split_no_power_data["where"] = div.text
-            split_no_power_data["when"] = find_no_power_hours(no_power_when_divs, i)
+            split_no_power_data.append(
+                {"where": div.text, "when": find_no_power_hours(no_power_when_divs, i)}
+            )
 
     if split_no_power_data:
         logger.info("split_no_power_data_present")
-        return send_no_power_email(split_no_power_data)
+        return send_no_power_email(tomorrow_date, split_no_power_data)
 
     logger.info("split_no_power_data_empty")
 
