@@ -1,7 +1,11 @@
+import logging
 import os
 import smtplib
 import ssl
 from email.message import EmailMessage
+
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
 
 gmail_user = os.getenv("GMAIL_USER")
 gmail_password = os.getenv("GMAIL_PASSWORD")
@@ -21,3 +25,4 @@ def send_no_power_email(split_data):
         smtp.starttls(context=context)
         smtp.login(gmail_user, gmail_password)
         smtp.send_message(msg)
+        logger.info("email_sent")
