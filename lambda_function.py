@@ -5,7 +5,7 @@ from datetime import date, timedelta
 from no_power_email import send_no_power_email
 
 
-def main():
+def lambda_handler(event, context):
     split_no_power_data = {}
     split_hep_url = "https://www.hep.hr/ods/bez-struje/19?dp=split&el=208"
     tomorrow_date = (date.today() + timedelta(days=1)).strftime("%d.%m.%Y")
@@ -34,7 +34,3 @@ def find_no_power_hours(time_divs, split_index):
     for i, div in enumerate(time_divs):
         if i == split_index:
             return div.text
-
-
-if __name__ == "__main__":
-    main()
