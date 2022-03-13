@@ -16,7 +16,7 @@ def send_no_power_email(split_data):
     msg.set_content(f"{split_data['where']}\n\n{split_data['when']}")
 
     msg["Subject"] = "Split bez struje"
-    msg["From"] = "lukabotmail@gmail.com"
+    msg["From"] = gmail_user
     msg["To"] = ["kilic.luka@gmail.com", "marijakardum1@gmail.com"]
 
     context = ssl.create_default_context()
