@@ -1,7 +1,6 @@
-from datetime import date, timedelta
-
 import requests
 from bs4 import BeautifulSoup
+from datetime import date, timedelta
 
 from no_power_email import send_no_power_email
 
@@ -10,8 +9,9 @@ def main():
     split_no_power_data = {}
     split_hep_url = "https://www.hep.hr/ods/bez-struje/19?dp=split&el=208"
     tomorrow_date = (date.today() + timedelta(days=1)).strftime("%d.%m.%Y")
+    final_url = split_hep_url + f"&datum={tomorrow_date}"
 
-    res = requests.get(split_hep_url + f"&datum={tomorrow_date}")
+    res = requests.get(final_url)
     soup = BeautifulSoup(res.content, "html.parser")
 
     no_power_where_divs = soup.find_all("div", {"class": "mjesto tipR"})
