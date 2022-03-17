@@ -9,6 +9,7 @@ logger.setLevel(logging.INFO)
 
 gmail_user = os.getenv("GMAIL_USER")
 gmail_password = os.getenv("GMAIL_PASSWORD")
+recipient_emails = os.getenv("RECIPIENT_EMAILS").split(", ")
 
 
 def send_no_power_email(tomorrow_date, split_data):
@@ -18,7 +19,7 @@ def send_no_power_email(tomorrow_date, split_data):
 
     msg["Subject"] = f"Split bez struje - {tomorrow_date}"
     msg["From"] = gmail_user
-    msg["To"] = ["kilic.luka@gmail.com", "marijakardum1@gmail.com"]
+    msg["To"] = recipient_emails
 
     context = ssl.create_default_context()
 
